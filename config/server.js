@@ -22,6 +22,8 @@ const authRoutes = require("../routes/auth-routes");
 const checkinRoutes = require("../routes/checkin-routes");
 const reminderRoutes = require("../routes/reminderRoutes");
 const emailRoutes = require("../routes/email-routes"); // 🚀 NUEVO: para pruebas de correo
+const statsRoutes = require('../routes/stats-routes');
+
 
 // 📘 Modelos
 const Habit = require('../models/habits-model');
@@ -38,6 +40,7 @@ app.use('/auth', authRoutes);
 app.use(router);
 app.use('/habits', checkinRoutes);
 app.use('/reminders', reminderRoutes);
+app.use('/', statsRoutes);
 
 // ✉️ Rutas para correos
 app.use('/api/email', emailRoutes); // ✅ endpoint de prueba de correo
