@@ -8,6 +8,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 
+
 const app = express();
 app.use(cookieParser()); 
 
@@ -23,6 +24,9 @@ const checkinRoutes = require("../routes/checkin-routes");
 const reminderRoutes = require("../routes/reminderRoutes");
 const emailRoutes = require("../routes/email-routes"); // 🚀 NUEVO: para pruebas de correo
 const statsRoutes = require('../routes/stats-routes');
+const achievementRoutes = require('../routes/achievementRoutes');
+const aiRoutes = require('../routes/ai');
+
 
 
 // 📘 Modelos
@@ -41,6 +45,9 @@ app.use(router);
 app.use('/habits', checkinRoutes);
 app.use('/reminders', reminderRoutes);
 app.use('/', statsRoutes);
+app.use('/api', achievementRoutes);
+app.use("/ai", aiRoutes); 
+
 
 // ✉️ Rutas para correos
 app.use('/api/email', emailRoutes); // ✅ endpoint de prueba de correo

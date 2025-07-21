@@ -10,8 +10,8 @@ const app = initializeApp(firebaseConfig); //
 
 const auth = getAuth(app);
 
-const email = "prueba20@gmail.com"; // debe existir en Firebase Auth
-const password = "123456";        // contraseña válida
+const email = "isaacromeror99@gmail.com"; // debe existir en Firebase Auth
+const password = "romero22";        // contraseña válida
 
 signInWithEmailAndPassword(auth, email, password)
   .then(async (userCredential) => {
