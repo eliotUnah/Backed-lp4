@@ -1,12 +1,10 @@
-
-// models/Achievement.js
 const mongoose = require('mongoose');
 
 const achievementSchema = new mongoose.Schema({
   userId: {
-    type: String,
-    required: true
-  },
+  type: String,
+  required: true
+},
   habitId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Habit',
@@ -14,11 +12,16 @@ const achievementSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    required: true
+    required: true,
+    enum: ['PerfectDailyStreak', 'PerfectWeek', 'MonthlyChampion']
   },
   earnedOn: {
     type: Date,
     default: Date.now
+  },
+  badgeUrl: {
+    type: String,
+    required: false
   }
 });
 

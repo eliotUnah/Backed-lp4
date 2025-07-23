@@ -7,12 +7,18 @@ const checkinSchema = new mongoose.Schema({
         ref: 'Habit',
         required: true
     },
+  userId: {
+  type: String, 
+  ref: 'User', 
+  required: true
+},
+
     date: {
         type: Date,
         required: true
     }
 }, { timestamps: true });
 
-checkinSchema.index({ habitId: 1, date: 1 }, { unique: true });
+checkinSchema.index({userId: 1, habitId: 1, date: 1 }, { unique: true });
 
 module.exports = mongoose.model('Checkin', checkinSchema);
