@@ -4,19 +4,43 @@ const Habit = require('../models/habits-model');
 // Crear un nuevo hábito POST (HU-01)
 const createHabit = async (req, res) => {
   try {
-    const userId = req.user.uid; // ✅ usamos userId como campo en el modelo
-    const { title, category = "Otros", frequency } = req.body;
+    const userId = req.user.uid;
+    const {
+      title,
+      category = "Otros",
+      frequency,
+      startTime,
+      durationMinutes = 30,
+      daysOfWeek = []
+    } = req.body;
 
+    // Validaciones básicas
     if (!title || !frequency || typeof title !== "string" || title.trim() === "" || title.length > 50) {
       return res.status(400).json({ message: "❌ title y frequency son obligatorios y deben ser válidos" });
     }
 
-    const existingHabit = await Habit.findOne({ userId, title }); // ✅ filtra por userId
+    if (!startTime || isNaN(Date.parse(startTime))) {
+      return res.status(400).json({ message: "❌ startTime debe ser una fecha válida" });
+    }
+
+    if (!Array.isArray(daysOfWeek) || daysOfWeek.some(day => !["MO", "TU", "WE", "TH", "FR", "SA", "SU"].includes(day))) {
+      return res.status(400).json({ message: "❌ daysOfWeek debe ser un array con códigos válidos de días (MO, TU...)" });
+    }
+
+    const existingHabit = await Habit.findOne({ userId, title });
     if (existingHabit) {
       return res.status(400).json({ message: "⚠️ Ya existe un hábito con este título para este usuario" });
     }
 
-    const newHabit = await Habit.create({ userId, title, category, frequency }); // ✅ se guarda con userId
+    const newHabit = await Habit.create({
+      userId,
+      title,
+      category,
+      frequency,
+      startTime,
+      durationMinutes,
+      daysOfWeek
+    });
 
     res.status(201).json({ message: "✅ Hábito creado exitosamente", habit: newHabit });
   } catch (error) {
@@ -24,7 +48,7 @@ const createHabit = async (req, res) => {
     res.status(500).json({ message: "🚨 Error interno del servidor" });
   }
 };
-
+ 
 // Obtener hábitos GET 
 const getHabits = async (req, res) => {
   try {
@@ -68,7 +92,15 @@ const deleteHabit = async (req, res) => {
 const updateHabitByUid = async (req, res) => {
   try {
     const userId = req.user.uid;
-    const { habitId, title, frequency, category } = req.body;
+    const {
+      habitId,
+      title,
+      frequency,
+      category,
+      startTime,
+      durationMinutes,
+      daysOfWeek
+    } = req.body;
 
     if (!habitId) {
       return res.status(400).json({ message: "❌ Se requiere el ID del hábito a actualizar" });
@@ -79,6 +111,7 @@ const updateHabitByUid = async (req, res) => {
       return res.status(404).json({ message: "⚠️ No se encontró un hábito que coincida o no te pertenece" });
     }
 
+    // Validaciones y asignación de campos editables
     if (title) {
       if (typeof title !== "string" || title.trim() === "" || title.length > 50) {
         return res.status(400).json({ message: "❌ Título inválido" });
@@ -89,6 +122,27 @@ const updateHabitByUid = async (req, res) => {
     if (frequency) habit.frequency = frequency;
     if (category) habit.category = category;
 
+    if (startTime) {
+      const parsedTime = Date.parse(startTime);
+      if (isNaN(parsedTime)) {
+        return res.status(400).json({ message: "❌ startTime debe ser una fecha válida" });
+      }
+      habit.startTime = new Date(parsedTime);
+    }
+
+    if (durationMinutes && !isNaN(durationMinutes)) {
+      habit.durationMinutes = parseInt(durationMinutes);
+    }
+
+    if (Array.isArray(daysOfWeek)) {
+      const validDays = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+      const allValid = daysOfWeek.every(day => validDays.includes(day));
+      if (!allValid) {
+        return res.status(400).json({ message: "❌ daysOfWeek contiene códigos inválidos de día" });
+      }
+      habit.daysOfWeek = daysOfWeek;
+    }
+
     await habit.save();
 
     res.status(200).json({ message: "✅ Hábito actualizado con éxito", habit });
@@ -97,6 +151,7 @@ const updateHabitByUid = async (req, res) => {
     res.status(500).json({ message: "🚨 Error interno del servidor" });
   }
 };
+
 
 // Buscar hábitos con filtros (GET)
 const searchHabits = async (req, res) => {

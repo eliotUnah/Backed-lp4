@@ -27,7 +27,27 @@ const habitSchema = new mongoose.Schema({
     enum: ["Diario", "Semanal", "Mensual"],
     required: true
   }, // Frecuencia del hábito
+ startTime: {
+    type: Date,
+    required: true
+  }, // Hora de inicio del hábito (en cualquier día base)
 
+  durationMinutes: {
+    type: Number,
+    default: 30
+  }, // Duración estimada en minutos
+
+  daysOfWeek: {
+    type: [String],
+    enum: ["MO", "TU", "WE", "TH", "FR", "SA", "SU"],
+    default: []
+  }, // Días en que se repite el hábito (para eventos recurrentes)
+
+  gcalEventId: {
+    type: String,
+    default: null
+  }, // ID del evento creado en Google Calendar
+  
   streakCurrent: {
     type: Number,
     default: 0

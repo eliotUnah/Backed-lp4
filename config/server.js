@@ -27,7 +27,8 @@ const emailRoutes = require("../routes/email-routes"); // 🚀 NUEVO: para prueb
 const statsRoutes = require('../routes/stats-routes');
 const achievementRoutes = require('../routes/achievementRoutes');
 const aiRoutes = require('../routes/ai');
-
+const googleRoutes = require("../routes/google_routes");
+const calendarRoutes = require("../routes/calendar-routes");
 
 
 // 📘 Modelos
@@ -48,6 +49,10 @@ app.use('/reminders', reminderRoutes);
 app.use('/', statsRoutes);
 app.use('/api', achievementRoutes);
 app.use("/ai", aiRoutes); 
+app.use("/habits", checkinRoutes);
+app.use("/reminders", reminderRoutes);
+app.use("/integrations/google", googleRoutes);
+app.use("/calendar", calendarRoutes); 
 
 
 // ✉️ Rutas para correos
