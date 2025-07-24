@@ -20,13 +20,24 @@ const suggestHabit = async (req, res) => {
     // 2. Generar sugerencia con Gemini
     console.log("✨ Solicitando sugerencia a Gemini...");
     const prompt = `
-      Recomienda un hábito personal saludable y breve.
-      Devuelve solo un JSON con:
-      {
-        "title": "Título corto del hábito",
-        "reason": "Motivo o beneficio de hacerlo"
-      }
-    `;
+ Eres un experto en hábitos saludables.
+
+Recomienda un hábito personal, breve, saludable y fácil de implementar.
+
+Devuelve SOLO un JSON con los siguientes campos:
+
+{
+  "title": "Texto del hábito (máximo 50 caracteres, sin comillas internas)",
+  "reason": "Explicación breve del beneficio",
+  "category": "Salud" | "Productividad" | "Bienestar" | "Otros",
+  "frequency": "Diario" | "Semanal" | "Mensual"
+}
+
+✅ IMPORTANTE:
+- "title" no debe superar los 50 caracteres.
+- No incluyas comentarios ni explicación fuera del JSON.
+- No uses caracteres especiales innecesarios ni saltos de línea fuera del JSON.
+`;
     const result = await model.generateContent(prompt);
     const content = result.response.text().trim();
 
@@ -39,11 +50,13 @@ const suggestHabit = async (req, res) => {
     const response = { ...suggestion, level };
 
     // 3. Guardar en MongoDB
-    await Suggestion.create({
+await Suggestion.create({
   userId,
   suggestion: suggestion.title,
   reason: suggestion.reason,
-  level,
+  category: suggestion.category,
+  frequency: suggestion.frequency,
+  level
 });
 
     // 4. Guardar en Redis por 24h
