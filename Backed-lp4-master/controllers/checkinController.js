@@ -68,7 +68,9 @@ exports.createCheckin = async (req, res) => {
         if (!habit) {
             return res.status(404).json({ message: 'Hábito no encontrado o no pertenece al usuario.' });
         }
+
         const existingCheckin = await Checkin.findOne({ habitId, userId: uid, date: checkinDate });
+
         if (existingCheckin) {
             return res.status(409).json({ message: 'Ya existe un check-in para hoy.' });
         }
@@ -111,7 +113,9 @@ exports.getCheckins = async (req, res) => {
         if (!habit) {
             return res.status(404).json({ message: 'Hábito no encontrado o no pertenece al usuario.' });
         }
+
         let dateQuery = { habitId, userId: uid };
+
         if (from) {
             const startDate = normalizeDateToStartOfDay(new Date(from));
             dateQuery.date = { ...dateQuery.date, $gte: startDate };
@@ -176,4 +180,3 @@ async function calculateAndUpdateStreak(habitId) {
 
     return { habit, streakCurrent: habit.streakCurrent, streakBest: habit.streakBest };
 }
-

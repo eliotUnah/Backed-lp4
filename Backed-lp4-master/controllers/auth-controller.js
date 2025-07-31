@@ -21,7 +21,7 @@ const loginWithFirebase = async (req, res) => {
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "Lax",
+      sameSite: "Strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -57,4 +57,5 @@ const getCurrentUser = async (req, res) => {
     res.status(401).json({ error: "Token inválido o expirado" });
   }
 };
-module.exports = { loginWithFirebase, getCurrentUser }; 
+
+module.exports = { loginWithFirebase, getCurrentUser };
