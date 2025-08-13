@@ -29,8 +29,14 @@ const achievementRoutes = require('../routes/achievementRoutes');
 const aiRoutes = require('../routes/ai');
 const googleRoutes = require("../routes/google_routes");
 const calendarRoutes = require("../routes/calendar-routes");
-
-
+const rankingRoutes = require("../routes/ranking-routes");
+const friendRoutes = require('../routes/friends-routes');
+const moodRoutes = require("../routes/moodRoutes");
+const categoryRoutes = require('../routes/Category');
+const habitsRoutes = require('../routes/habits');
+const exportRouter = require('../routes/export-routes');
+const userPreferencesRoutes = require("../routes/user-preferences");
+const landingRoutes = require("../routes/landigRoutes");
 // 📘 Modelos
 const Habit = require('../models/habits-model');
 
@@ -41,7 +47,7 @@ app.use(bodyParser.json());
 
 // 🌐 Rutas públicas
 app.use('/auth', authRoutes);
-
+app.use('/api', landingRoutes);
 // 🔐 Rutas protegidas
 app.use(router);
 app.use('/habits', checkinRoutes);
@@ -50,11 +56,15 @@ app.use('/', statsRoutes);
 app.use('/api', achievementRoutes);
 app.use("/ai", aiRoutes); 
 app.use("/habits", checkinRoutes);
-app.use("/reminders", reminderRoutes);
 app.use("/integrations/google", googleRoutes);
 app.use("/calendar", calendarRoutes); 
-
-
+app.use("/", rankingRoutes);
+app.use('/friends', friendRoutes); // ✅ Rutas de amigos
+app.use("/api", moodRoutes);
+app.use('/categories', categoryRoutes);
+app.use('/habits', habitsRoutes);
+app.use('/api', exportRouter);
+app.use("/api/users/preferences", userPreferencesRoutes);
 // ✉️ Rutas para correos
 app.use('/api/email', emailRoutes); // ✅ endpoint de prueba de correo
 

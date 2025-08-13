@@ -1,13 +1,13 @@
 const Reminder = require('../models/reminder');
 const Habit = require('../models/habits-model');
-// Crear un nuevo recordatorio
+// 📥 Crear un nuevo recordatorio usando habitId desde la URL
 const createReminder = async (req, res) => {
   try {
     const userId = req.user.uid;
     const email = req.user.email;
-    const { habitId, time, timezone } = req.body;
+    const { habitId } = req.params;
+    const { time, timezone } = req.body;
 
-    // 🧪 Mostrar que email y userId están presentes
     console.log("📥 Datos del usuario:", { userId, email });
     console.log("📥 Datos del body:", { habitId, time, timezone });
 
@@ -22,13 +22,22 @@ const createReminder = async (req, res) => {
       return res.status(404).json({ error: 'El hábito no existe o no te pertenece.' });
     }
 
-    const reminder = await Reminder.create({ habitId, userId, email, time, timezone });
+    const reminder = await Reminder.create({
+      habitId,
+      userId,
+      email,
+      time,
+      timezone,
+      active: false, // por defecto inactivo
+    });
+
     res.status(201).json(reminder);
   } catch (error) {
     console.error('❌ Error al crear recordatorio:', error);
     res.status(500).json({ error: 'Error interno del servidor al crear el recordatorio.' });
   }
 };
+
 // Obtener todos los recordatorios del usuario
 const getUserReminders = async (req, res) => {
   try {

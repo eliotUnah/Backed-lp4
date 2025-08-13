@@ -15,13 +15,12 @@ const habitSchema = new mongoose.Schema({
     maxlength: 50,
     trim: true
   }, // Título del hábito
-
+// Categoría del hábito
   category: {
-    type: String,
-    enum: ["Salud", "Productividad", "Bienestar", "Otros"],
-    default: "Otros"
-  }, // Categoría del hábito
-
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Category',
+  required: false
+},
   frequency: {
     type: String,
     enum: ["Diario", "Semanal", "Mensual"],

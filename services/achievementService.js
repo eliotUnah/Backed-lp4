@@ -11,7 +11,7 @@ async function checkAchievement(habit) {
     type: 'PerfectWeek'
   });
 
-  const streakWeeks = Math.floor(habit.streakCurrent / 7);
+  const streakWeeks = Math.floor(habit.streakCurrent / 1);
   if (streakWeeks > totalWeeklyAchievements) {
     // Crear nuevo logro semanal
     const weekAchievement = await Achievement.create({

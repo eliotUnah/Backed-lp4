@@ -8,12 +8,13 @@ const {
   deleteReminder,
   toggleReminderState
 } = require('../controllers/reminder-controller');
-
+const authenticateUser = require('../middlewares/authenticateUser');
 // Definición de endpoints
-router.post('/', createReminder);                 // POST /reminders
-router.get('/:userId', getUserReminders);         // GET /reminders/:userId
-router.put('/:id', updateReminder);               // PUT /reminders/:id
-router.delete('/:id', deleteReminder);            // DELETE /reminders/:id
-router.patch('/:id/deactivate', toggleReminderState); // PATCH /reminders/:id/deactivate
+router.post('/:habitId', authenticateUser, createReminder);
+router.get('/', authenticateUser, getUserReminders); // ✅ corregido
+router.put('/:id', authenticateUser, updateReminder);
+router.delete('/:id', authenticateUser, deleteReminder);
+router.patch('/:id/deactivate', authenticateUser, toggleReminderState);
 
 module.exports = router;
+

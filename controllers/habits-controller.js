@@ -1,7 +1,10 @@
 "use strict";
+const mongoose = require('mongoose');
 const Habit = require('../models/habits-model');
+const Category = require("../models/Category");
 
-// Crear un nuevo hábito POST (HU-01)
+const defaultCategories = ['Salud', 'Productividad', 'Bienestar', 'Otros'];
+
 const createHabit = async (req, res) => {
   try {
     const userId = req.user.uid;
@@ -14,28 +17,38 @@ const createHabit = async (req, res) => {
       daysOfWeek = []
     } = req.body;
 
-    // Validaciones básicas
-    if (!title || !frequency || typeof title !== "string" || title.trim() === "" || title.length > 50) {
-      return res.status(400).json({ message: "❌ title y frequency son obligatorios y deben ser válidos" });
+    // (Aquí tus validaciones normales...)
+
+    // Verificar categoría
+    let categoryDoc = null;
+
+    if (defaultCategories.includes(category)) {
+      // Buscar categoría default con userId: null
+      categoryDoc = await Category.findOne({ name: category, userId: null });
+      // Si no existe, crearla
+      if (!categoryDoc) {
+        categoryDoc = await Category.create({ name: category, userId: null });
+      }
+    } else if (mongoose.Types.ObjectId.isValid(category)) {
+      // Categoría personalizada: buscar por _id
+      categoryDoc = await Category.findOne({ _id: category, userId });
+    } else {
+      // Categoría personalizada: buscar por nombre y userId
+      categoryDoc = await Category.findOne({ name: category, userId });
     }
 
-    if (!startTime || isNaN(Date.parse(startTime))) {
-      return res.status(400).json({ message: "❌ startTime debe ser una fecha válida" });
+    if (!categoryDoc) {
+      return res.status(400).json({ message: "❌ La categoría no existe o no te pertenece" });
     }
 
-    if (!Array.isArray(daysOfWeek) || daysOfWeek.some(day => !["MO", "TU", "WE", "TH", "FR", "SA", "SU"].includes(day))) {
-      return res.status(400).json({ message: "❌ daysOfWeek debe ser un array con códigos válidos de días (MO, TU...)" });
-    }
+    // Ahora sí guardamos el _id en la categoría
+    req.body.category = categoryDoc._id;
 
-    const existingHabit = await Habit.findOne({ userId, title });
-    if (existingHabit) {
-      return res.status(400).json({ message: "⚠️ Ya existe un hábito con este título para este usuario" });
-    }
-
+    // Crear hábito con la categoría ya convertida a ObjectId
     const newHabit = await Habit.create({
       userId,
       title,
-      category,
+      category: categoryDoc._id,
       frequency,
       startTime,
       durationMinutes,
@@ -48,13 +61,13 @@ const createHabit = async (req, res) => {
     res.status(500).json({ message: "🚨 Error interno del servidor" });
   }
 };
- 
+
 // Obtener hábitos GET 
 const getHabits = async (req, res) => {
   try {
     const userId = req.user.uid; // 🔐 viene del token verificado por el middleware
-
-    const habits = await Habit.find({ userId });
+    const habits = await Habit.find({ userId }).populate('category', 'name');
+    return res.json(habits);
 
    if (!habits || habits.length === 0) {
   return res.status(200).json([]); 
@@ -111,7 +124,7 @@ const updateHabitByUid = async (req, res) => {
       return res.status(404).json({ message: "⚠️ No se encontró un hábito que coincida o no te pertenece" });
     }
 
-    // Validaciones y asignación de campos editables
+    // Validaciones y asignación de otros campos
     if (title) {
       if (typeof title !== "string" || title.trim() === "" || title.length > 50) {
         return res.status(400).json({ message: "❌ Título inválido" });
@@ -120,7 +133,6 @@ const updateHabitByUid = async (req, res) => {
     }
 
     if (frequency) habit.frequency = frequency;
-    if (category) habit.category = category;
 
     if (startTime) {
       const parsedTime = Date.parse(startTime);
@@ -143,7 +155,32 @@ const updateHabitByUid = async (req, res) => {
       habit.daysOfWeek = daysOfWeek;
     }
 
+    // --- Bloque para resolver la categoría ---
+    if (category) {
+      const defaultCategories = ['Salud', 'Productividad', 'Bienestar', 'Otros'];
+      let categoryDoc = null;
+
+      if (defaultCategories.includes(category)) {
+        categoryDoc = await Category.findOne({ name: category, userId: null });
+        if (!categoryDoc) {
+          categoryDoc = await Category.create({ name: category, userId: null });
+        }
+      } else if (mongoose.Types.ObjectId.isValid(category)) {
+        categoryDoc = await Category.findOne({ _id: category, userId });
+      } else {
+        categoryDoc = await Category.findOne({ name: category, userId });
+      }
+
+      if (!categoryDoc) {
+        return res.status(400).json({ message: "❌ La categoría no existe o no te pertenece" });
+      }
+
+      habit.category = categoryDoc._id;
+    }
+    // -----------------------------------------
+
     await habit.save();
+    await habit.populate('category');
 
     res.status(200).json({ message: "✅ Hábito actualizado con éxito", habit });
   } catch (error) {
@@ -154,6 +191,7 @@ const updateHabitByUid = async (req, res) => {
 
 
 // Buscar hábitos con filtros (GET)
+
 const searchHabits = async (req, res) => {
   try {
     const userId = req.user.uid;
@@ -164,13 +202,41 @@ const searchHabits = async (req, res) => {
     if (search) {
       query.$text = { $search: search };
     }
-    if (frequency) query.frequency = frequency.trim();
-    if (category) query.category = category.trim();
+
+    if (frequency) {
+      query.frequency = frequency.trim();
+    }
+
+    // Aquí va el código para category que te pasé arriba:
+    const defaultCategories = ['Salud', 'Productividad', 'Bienestar', 'Otros'];
+if (category && category.trim() !== "") {
+  if (defaultCategories.includes(category.trim())) {
+    // Categoría por defecto (ej: "Salud", "Bienestar")
+    const categoryDoc = await Category.findOne({ name: category.trim(), userId: null });
+    if (categoryDoc) {
+      query.category = categoryDoc._id; // Buscar por _id real
+    }
+    // Si no existe categoryDoc, no filtrar por categoría
+  } else if (mongoose.Types.ObjectId.isValid(category.trim())) {
+    // Categoría personalizada con id válido
+    query.category = category.trim();
+  } else {
+    // Nombre que no es por defecto, buscar categoría personalizada con userId
+    const categoryDoc = await Category.findOne({ name: category.trim(), userId });
+    if (categoryDoc) {
+      query.category = categoryDoc._id;
+    }
+    // Si no existe categoryDoc, no filtrar por categoría
+  }
+}
+
+
 
     console.log("🟡 QUERY FILTRADA:", query);
 
     const habits = await Habit.find(query)
       .select("title category frequency createdAt")
+      .populate('category', 'name')
       .sort({ createdAt: -1 })
       .lean();
 
@@ -184,10 +250,12 @@ const searchHabits = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   createHabit,
   getHabits,
   deleteHabit,
   updateHabitByUid,
   searchHabits
-};
+};  
