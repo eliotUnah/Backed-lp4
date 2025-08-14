@@ -1,0 +1,101 @@
+.bg-indigo-50 {
+  background: linear-gradient(120deg, #f3e8ff, #e0e7ff);
+}
+
+.testimonial-container {
+  position: relative;
+  height: 24rem;
+}
+
+.testimonial-card {
+  position: absolute;
+  inset: 0;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  background-color: var(--indigo-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimonial-avatar .icon {
+  width: 2rem;
+  height: 2rem;
+  color: var(--indigo-600);
+}
+
+.testimonial-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.testimonial-role {
+  color: var(--indigo-600);
+}
+
+.testimonial-content {
+  font-size: 1.125rem;
+  color: var(--gray-700);
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.star {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--gray-300);
+}
+
+.star.filled {
+  color: var(--yellow-400);
+  fill: var(--yellow-400);
+}
+
+.indicators {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.indicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background-color: var(--gray-300);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.indicator.active {
+  background-color: var(--indigo-600);
+  transform: scale(1.2);
+}

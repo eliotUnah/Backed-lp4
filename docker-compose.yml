@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./Backed-lp4-Main2
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./Backed-lp4-Main2/config/.env
+    volumes:
+      - ./Backed-lp4-Main2:/app
+    depends_on:
+      - frontend
+
+  frontend:
+    build: ./Frontend-LP4-Main
+    ports:
+      - "3000:80"
+   

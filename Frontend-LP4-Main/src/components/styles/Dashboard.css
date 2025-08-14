@@ -1,0 +1,897 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+/* Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+/* Quicksand */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+/* Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+/* Nunito */
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+/* Inter (se importa diferente porque está en el Early Access de Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+
+.dashboard {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(
+    -45deg,
+    #f3e5f5 0%,
+    #e598f3 15%,
+    #d1c4e9 30%,
+    #c5cae9 45%,
+    #d1c4e9 60%,
+    #e1bee7 75%,
+    #f3e5f5 90%,
+    #e8eaf6 100%
+  );
+  background-size: 400% 400%;
+  animation: softPurpleFlow 20s ease infinite;
+  background-attachment: fixed;
+}
+
+@keyframes softPurpleFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} 
+ /* Sidebar styles */
+.dashboard__sidebar {
+    width: 80px;
+    height: 100vh;
+    background: linear-gradient(-45deg, #2c0346, #4a148c, #6a1b9a, #8e24aa, #ab47bc);
+    background-size: 400% 400%;
+    animation: gradientShift 6s ease infinite;
+    color: white;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: fixed;
+    overflow: hidden;
+    z-index: 100;
+    box-shadow: 4px 0 20px rgba(106, 27, 154, 0.3);
+}
+
+.dashboard__sidebar:hover {
+    width: 225px;
+    box-shadow: 8px 0 30px rgba(106, 27, 154, 0.4);
+}
+
+.dashboard__profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+}
+
+.dashboard__profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e1bee7, #ba68c8, #9c27b0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+}
+
+.dashboard__sidebar:hover .dashboard__profile-img {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
+}
+
+.dashboard__profile-name {
+    white-space: nowrap;
+    font-weight: bold;
+    margin-bottom: 5px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard__profile-text {
+    font-size: 12px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.1s;
+    text-align: center;
+}
+
+.dashboard__sidebar:hover .dashboard__profile-name,
+.dashboard__sidebar:hover .dashboard__profile-text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.dashboard__menu-items {
+    padding: 20px 0;
+}
+
+.dashboard__menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard__menu-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(225, 190, 231, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.dashboard__menu-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+}
+
+.dashboard__profile-img svg {
+  width: 24px;
+  height: 24px;
+}
+
+.dashboard__menu-item:hover .dashboard__menu-icon svg {
+  stroke: #f3e5f5;
+  transition: all 0.3s ease;
+}
+.dashboard__menu-item:hover::before {
+    left: 100%;
+}
+
+.dashboard__menu-item:hover {
+    background: rgba(225, 190, 231, 0.2);
+    transform: translateX(5px);
+}
+
+.dashboard__menu-icon {
+    font-size: 20px;
+    margin-right: 15px;
+    min-width: 20px;
+    transition: all 0.3s ease;
+    color: #e1bee7;
+}
+
+.dashboard__menu-item:hover .dashboard__menu-icon {
+    transform: scale(1.2) rotate(5deg);
+    color: #f3e5f5;
+}
+
+.dashboard__menu-text {
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard__sidebar:hover .dashboard__menu-text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Stagger animation for menu items */
+.dashboard__menu-item:nth-child(1) .dashboard__menu-text { transition-delay: 0.05s; }
+.dashboard__menu-item:nth-child(2) .dashboard__menu-text { transition-delay: 0.1s; }
+.dashboard__menu-item:nth-child(3) .dashboard__menu-text { transition-delay: 0.15s; }
+.dashboard__menu-item:nth-child(4) .dashboard__menu-text { transition-delay: 0.2s; }
+.dashboard__menu-item:nth-child(5) .dashboard__menu-text { transition-delay: 0.25s; }
+
+/* Estado activo */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(165, 180, 252, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(165, 180, 252, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(165, 180, 252, 0);
+    }
+}
+
+.dashboard__menu-item.active {
+    background: rgba(186, 104, 200, 0.3);
+    animation: pulse 2s infinite;
+}
+ /* Animación del degradado */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.dashboard__sidebar--animated {
+    background: linear-gradient(-45deg, #2c0346, #4a148c, #6a1b9a, #8e24aa, #ab47bc, #ce93d8);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+}
+
+.dashboard__sidebar--subtle {
+    background: linear-gradient(135deg, #2c0346 0%, #4a148c 20%, #6a1b9a 40%, #8e24aa 60%, #ab47bc 80%, #ce93d8 100%);
+    background-size: 200% 200%;
+    animation: gradientFlow 12s linear infinite;
+}
+
+  /*Titulo y subtitulo */
+  .dashboard__title {
+  font-family: 'Poppins', sans-serif; /* Moderna y energizante */
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 10px;
+  animation: fadeInDown 0.8s ease-in-out;
+}
+
+.dashboard__subtitle {
+  font-family: 'Quicksand', sans-serif; /* Amistosa y suave */
+  font-size: 18px;
+  font-weight: 500;
+  color: #7f8c8d;
+  text-align: center;
+  margin-bottom: 30px;
+  animation: fadeInUp 1s ease-in-out;
+}
+.slider-title__fade-in {
+  animation: fadeInUp 0.7s ease-out forwards;
+  opacity: 0;
+}
+
+/* Animaciones opcionales */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.dashboard__main-content {
+  margin-left: 80px;
+  transition: margin-left 0.3s ease;
+  padding: 40px 20px;
+}
+
+.habitsPage__fade-in-card {
+  animation: fadeInCard 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInCard {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.dashboard__slider-container {
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.dashboard__slider-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e5e7eb;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.dashboard__slider {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard__slider-card {
+  transition: transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+}
+
+.dashboard__slider-card:hover {
+  transform: translateY(-5px);
+}
+
+.dashboard__card {
+  width: 250px;
+  height: 200px;
+  border-radius: 15px;
+  background: rgba(139, 92, 246, 0.25);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
+  border: 2px solid transparent;
+}
+
+.dashboard__card:hover {
+   background: rgba(139, 92, 246, 0.5); /* más intenso */
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.6), 0 12px 40px rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px); /* ligero levantamiento */
+  filter: brightness(1.1); /* brillo sutil */
+  transition: all 0.3s ease;
+  
+}
+
+/* Borde RGB iluminado por fuera */
+.dashboard__card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 15px;
+  padding: 3px; /* grosor del borde */
+  background: linear-gradient(
+    45deg,
+    #8b5cf6,
+    #a855f7,
+    #c084fc,
+    #e879f9,
+    #f0abfc,
+    #e879f9,
+    #c084fc,
+    #a855f7
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.dashboard__card-content {
+  flex-grow: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  color: #f8fafc;
+  font-weight: 900;
+  font-size: 1.2em;
+  z-index: 1;
+  position: relative;
+}
+
+.dashboard__habit-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  color: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard__card-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: rgba(139, 92, 246, 0.15);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.dashboard__card-btn {
+  background: none;
+  border: none;
+  color: rgba(248, 250, 252, 0.8);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+}
+
+.dashboard__card-btn:hover {
+  color: #ffffff;
+  background: rgba(139, 92, 246, 0.4);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+}
+
+@media (max-width: 768px) {
+  .dashboard__main-content {
+    margin-left: 0;
+    padding: 20px 10px;
+  }
+  
+  .dashboard__slider {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* Verde esmeralda suave que armoniza con fondos claros */
+.dashboard__checkin-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(38, 59, 126);  
+  animation: gradientShift 3s ease infinite;      
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(16, 185, 129, 0.25);  /* Sombra sutil del mismo tono */
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.dashboard__checkin-svgIcon {
+  width: 15px;
+  transition-duration: 0.3s;
+}
+
+.dashboard__checkin-svgIcon path {
+  fill: white;
+}
+
+.dashboard__checkin-button:hover {
+  width: 90px;
+  border-radius: 50px;
+  background-color: #059669;        /* Verde esmeralda más oscuro al hover */
+  transition-duration: 0.3s;
+  align-items: center;
+}
+
+.dashboard__checkin-button:hover .dashboard__checkin-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+/* Texto que aparece */
+.dashboard__checkin-button::before {
+  display: none;
+  content: "Checkin";
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.dashboard__checkin-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
+}
+.dashboard__delete-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color:rgb(38, 59, 126);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(255, 69, 69, 0.3);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+
+.dashboard__delete-svgIcon {
+  width: 15px;
+  transition-duration: 0.3s;
+}
+
+.dashboard__delete-svgIcon path {
+  fill: white;
+}
+
+.dashboard__delete-button:hover {
+  width: 90px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: rgb(255, 69, 69);
+  align-items: center;
+}
+
+.dashboard__delete-button:hover .dashboard__delete-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+.dashboard__delete-button::before {
+  display: none;
+  content: "Delete";
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.dashboard__delete-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
+}
+
+.dashboard__edit-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(38, 59, 126);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(150, 180, 250, 0.3);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none !important;
+}
+
+.dashboard__edit-svgIcon {
+  width: 17px;
+  transition-duration: 0.3s;
+}
+
+.dashboard__edit-svgIcon path {
+  fill: white;
+}
+
+.dashboard__edit-button:hover {
+  width: 90px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: #4169E1;
+  align-items: center;
+}
+
+.dashboard__edit-button:hover .dashboard__edit-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+.dashboard__edit-button::before {
+  display: none;
+  content: "Edit";
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.dashboard__edit-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
+}
+ .dashboard__prev-btn, .dashboard__next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-75%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard__prev-btn {
+           left: 90px; /* Lo alejas del borde izquierdo */
+        }
+
+        .dashboard__next-btn {
+            right: 10px;
+        }
+
+/*Estilos del segunod main content */
+    .dashboard__main-content2 {
+  margin-left: 80px; /* deja espacio para el sidebar cerrado */
+  transition: margin-left 0.3s ease;
+}
+   .habitsPage__fade-in-card2 {
+  animation: fadeInCard 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+        .dashboard__prev-btn2, .dashboard__next-btn2 {
+            position: absolute;
+            top: 50%;
+            transform: translateY(240%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard__prev-btn2 {
+            left: 10px;
+        }
+
+        .dashboard__next-btn2 {
+            right: 10px;
+        }
+
+        .dashboard__card--empty {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.dashboard__card-content--placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 0.9rem;
+  color: #888;
+}
+/* --- Contenedor Principal de Medallas (Dashboard.css) --- */
+/* Esta clase debería ser única para la sección de medallas si no lo es ya */
+/* Si este contenedor 'dashboard__logros-container' se usa solo en Medallas.jsx,
+   sus estilos no afectarán a otros apartados. */
+.dashboard__logros-container {
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Título ESPECÍFICO de la sección de Medallas */
+/* Si este título está DENTRO de '.dashboard__logros-container', esta regla es más segura */
+.dashboard__logros-container .dashboard__slider-title {
+  text-align: center;
+  color: #000000; /* Color específico para el título de esta sección: AZUL */
+  margin-bottom: 25px; /* Espacio debajo del título */
+  font-size: 2em; /* Tamaño del título para las medallas */
+}
+
+
+/* Contenedor de la cuadrícula de tarjetas de logro */
+.dashboard__logros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsivo, mínimo 280px */
+  gap: 25px; /* Espacio entre las tarjetas */
+  margin-top: 1rem;
+  justify-content: center; /* Centra las tarjetas en el espacio disponible */
+}
+
+/* Estilos para cada tarjeta de logro individual */
+.dashboard__logro-card {
+  text-align: left; /* Alineación del texto dentro de la tarjeta */
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.dashboard__logro-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Título del HÁBITO dentro de CADA TARJETA de logro */
+.dashboard__logro-card h3 {
+  margin-top: 0;
+  color: #333; /* Color del título del hábito (Ej: "Hacer Ejercicio") dentro de la tarjeta: NEGRO/GRIS OSCURO */
+  font-size: 1.4em; /* Tamaño del título del hábito dentro de la tarjeta */
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.dashboard__logro-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+/* --- Animaciones Keyframes (Se mantienen igual) --- */
+
+@keyframes popInBounce {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes subtlePulse {
+  0% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+  50% { text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.4); }
+  100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+}
+
+/* --- Estilos ESPECÍFICOS para los elementos de Logro (<li>) dentro de una tarjeta --- */
+/* Estos estilos son para el item de la lista (ej. "PerfectWeek - 19/7/2025") */
+.dashboard__logro-card .animated-achievement-item {
+  display: flex;
+  align-items: center; /* Centra el emoji y el texto verticalmente */
+  padding: 10px 0; /* Espacio vertical para cada elemento de logro */
+  border-bottom: 1px solid #eee; /* Separador entre logros */
+  opacity: 0; /* Inicialmente invisible para la animación */
+  animation: popInBounce 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  
+  /* Estilo del texto del logro (el "PerfectWeek — 19/7/2025") */
+  font-size: 1.1em; /* Tamaño de fuente para este texto específico */
+  color: #555; /* Color de fuente para este texto específico: GRIS OSCURO */
+}
+
+.dashboard__logro-card .animated-achievement-item:last-child {
+  border-bottom: none; /* Sin borde inferior en el último elemento de la lista de logros */
+}
+
+/* --- Estilos ESPECÍFICOS para el Emoji de la Medalla (<span>) --- */
+/* Este es para el emoji en sí */
+.dashboard__logro-card .animated-medal-emoji {
+  font-size: 3.5em; /* Tamaño grande para el emoji (ajusta si es necesario) */
+  margin-right: 15px; /* Espacio a la derecha del emoji */
+  display: inline-block; /* Crucial para aplicar transformaciones y sombras de texto */
+  min-width: 60px; /* Asegura un ancho mínimo para la alineación visual */
+  text-align: center; /* Centra el emoji dentro de su min-width */
+  line-height: 1; /* Ayuda a la alineación vertical del emoji */
+
+  /* Animación de pulso continuo (comienza después del popInBounce del padre) */
+  animation: subtlePulse 2s ease-in-out infinite 0.7s;
+}
+
+/* --- REVISA ESTAS REGLAS ORIGINALES (si aún existen en tu CSS) --- */
+/* Las siguientes reglas que tenías son genéricas y podrían estar causando conflictos.
+   Si las tienes, puedes ELIMINARLAS o ASEGURARTE de que no afecten tus títulos principales. */
+/*
+.dashboard__logro-img {
+  width: 64px;
+  height: 64px;
+}
+
+.dashboard__logro-text {
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.dashboard__logro-date {
+  font-size: 0.8rem;
+  color: #777;
+}
+*/
+
+ .nav-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }

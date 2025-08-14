@@ -1,0 +1,90 @@
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.bg-gray {
+  background: linear-gradient(120deg, #f3e8ff, #e0e7ff);
+}
+
+.section-title {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem;
+  color: var(--gray-900);
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  color: var(--gray-600);
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.benefits-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.benefit-card-wrapper {
+  height: 100%;
+}
+
+.benefit-card {
+  height: 100%;
+  background: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to));
+  padding: 0.125rem;
+  border-radius: 1rem;
+  transition: all 0.3s;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Nueva capa interior para fondo blanco */
+.benefit-inner {
+  height: 100%;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.875rem;
+}
+
+.benefit-icon-container {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to));
+}
+
+.benefit-icon-container .icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--indigo-600); /* O puedes usar #4F46E5 directamente si la variable no funciona */
+}
+
+.benefit-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--gray-900);
+}
+
+.benefit-description {
+  color: var(--gray-600);
+}
+
+@media (min-width: 768px) {
+  .benefits-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+}

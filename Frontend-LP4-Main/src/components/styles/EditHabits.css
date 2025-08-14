@@ -1,0 +1,21 @@
+.body-Edit {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #7409e6 0%,
+    #7306e7 25%,
+    #5e43da 50%,
+    #6446da 75%,
+    #5b34d1 100%
+  );
+  background-size: 400% 400%;
+  animation: purpleGradientFlow 8s ease-in-out infinite;
+}
+
+@keyframes purpleGradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+} 

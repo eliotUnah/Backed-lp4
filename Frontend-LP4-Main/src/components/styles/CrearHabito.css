@@ -1,0 +1,94 @@
+
+ :root {
+            --primary-dark: #5E35B1;
+            --primary-light: #7E57C2;
+            --accent: #D500F9;
+            --success: #4CAF50;
+            --danger: #F44336;
+        }
+        
+.radio-card input:checked + div {
+  border-color: #0d9488; /* teal-600 */
+  background-color: #f0fdfa; /* teal-50 */
+}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+.crear-habito {
+  font-family: 'Inter', sans-serif;
+}
+
+.crear-habito h1 {
+  font-family: 'Poppins', sans-serif;
+}
+/* CrearHabito.css */
+.custom-button {
+  padding: 17px 40px;
+  border-radius: 10px;
+  border: 0;
+  background-color: rgb(255, 56, 86);
+  letter-spacing: 1.5px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: rgb(201, 46, 70) 0px 10px 0px 0px;
+  color: white;
+  cursor: pointer;
+}
+
+.custom-button:hover {
+  box-shadow: rgb(201, 46, 70) 0px 7px 0px 0px;
+}
+
+.custom-button:active {
+  background-color: rgb(255, 56, 86);
+  box-shadow: rgb(201, 46, 70)
+}
+.centrado-flex {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;     /* Centra verticalmente */
+  min-height: 100vh;       /* Ocupa toda la altura de la pantalla */
+  padding: 3rem 1rem;      /* Espaciado opcional */
+}
+
+
+.Crear-habito-fondo {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(
+    -45deg,
+    #7e57c2 0%,    /* Morado más intenso */
+    #ab47bc 15%,    /* Morado suave */
+    #ce93d8 30%,    /* Morado claro */
+    #d1c4e9 45%,    /* Morado suave */
+    #ce93d8 60%,    /* Morado claro */
+    #ab47bc 75%,    /* Morado suave */
+    #7e57c2 90%,    /* Morado más intenso */
+    #e1bee7 100%    /* Color complementario suave */
+  );
+  background-size: 400% 400%;
+  animation: softPurpleFlow 20s ease infinite;
+  background-attachment: fixed;
+}
+
+.editar-habito-fondo {
+margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(
+    -45deg,
+    #7e57c2 0%,    /* Morado más intenso */
+    #ab47bc 15%,    /* Morado suave */
+    #ce93d8 30%,    /* Morado claro */
+    #d1c4e9 45%,    /* Morado suave */
+    #ce93d8 60%,    /* Morado claro */
+    #ab47bc 75%,    /* Morado suave */
+    #7e57c2 90%,    /* Morado más intenso */
+    #e1bee7 100%    /* Color complementario suave */
+  );
+  background-size: 400% 400%;
+  animation: softPurpleFlow 20s ease infinite;
+  background-attachment: fixed;
+}
